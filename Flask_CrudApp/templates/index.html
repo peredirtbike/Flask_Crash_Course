@@ -9,8 +9,21 @@
         <div class="col md-12">
             <div class="jumbotron p-3">
                 <h2>Manage <b>Employees</b> 
-                    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#mymodal">Add New Employee</button>
+                    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#modaladd">Add New Employee</button>
                 </h2>
+
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <strong>{{message}}</strong>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
 
                 <table class="table table-hover table-dark">
                     <tr>
@@ -21,11 +34,16 @@
                         <th>Action</th>
                     </tr>
 
+                    <!-- Showing the data -->
+
+                    {% for row in employees %}
+
+
                     <tr>
-                        <td>01</td>
-                        <td>Pere</td>
-                        <td>pere@pere.com</td>
-                        <td>56124521</td>
+                        <td>{{row.id}}</td>
+                        <td>{{row.name}}</td>
+                        <td>{{row.email}}</td>
+                        <td>{{row.number}}</td>
                         <td>
                             <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit">Edit</a>
                             <a href="#" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete?')">Delete</a>
@@ -42,7 +60,7 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            <form action="" method="POST">
+                            <form action="edit" method="POST">
                               <div class="form-group">
                                 <label>Name:</label>
                                 <input class="form-control" type="text" name="name" required="1">
@@ -52,7 +70,7 @@
                                 <input class="form-control" type="text" name="phone" required="1">
                               </div>
                  
-                            </form>
+                            
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -60,11 +78,13 @@
                           </div>
                         </div>
                       </div>
-                  </div>    
+                  </div>
+                            </form>
+                 {% endfor %}               
                 </table>
             </div>
 
-            <div id="mymodal" class="modal fade" role="dialog">
+            <div id="modaladd" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -74,7 +94,7 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      <form action="" method="POST">
+                      <form action="{{url_for('insert')}}" method="POST">
                         <div class="form-group">
                           <label>Name:</label>
                           <input class="form-control" type="text" name="name" required="1">
@@ -84,7 +104,6 @@
                           <input class="form-control" type="text" name="phone" required="1">
                         </div>
            
-                      </form>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -93,6 +112,8 @@
                   </div>
                 </div>
             </div>
+          </form>
+
 
         </div>
     </div>
