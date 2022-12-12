@@ -43,14 +43,14 @@
                         <td>{{row.id}}</td>
                         <td>{{row.name}}</td>
                         <td>{{row.email}}</td>
-                        <td>{{row.number}}</td>
+                        <td>{{row.phone}}</td>
                         <td>
-                            <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit">Edit</a>
-                            <a href="#" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete?')">Delete</a>
+                            <a href="/update/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Edit</a>
+                            <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete?')">Delete</a>
                         </td>
                     </tr>
 
-                    <div id="modaledit" class="modal fade" role="dialog">
+                    <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -60,14 +60,16 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            <form action="edit" method="POST">
+                            <form action="{{url_for('update')}}" method="POST">
                               <div class="form-group">
+                                <input type="hidden" name="id" value="{{row.id}}">
+
                                 <label>Name:</label>
-                                <input class="form-control" type="text" name="name" required="1">
+                                <input class="form-control" type="text" name="name" required="1" value="{{row.name}}">
                                 <label>Email:</label>
-                                <input class="form-control" type="email" name="email" required="1" >
+                                <input class="form-control" type="email" name="email" required="1" value="{{row.email}}">
                                 <label>Phone:</label>
-                                <input class="form-control" type="text" name="phone" required="1">
+                                <input class="form-control" type="text" name="phone" required="1" value="{{row.phone}}">
                               </div>
                  
                             
